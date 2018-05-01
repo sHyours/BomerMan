@@ -263,7 +263,7 @@
         }
     }
     var toOnce = function() {
-        var lv = parseInt(document.getElementById('lv').value || 150, 10),
+        var lv = document.getElementById('lv').value || 150,
             star = parseInt(document.getElementById('star').value || 17, 10),
             currentStar = parseInt(document.getElementById('currentStar').value || 0, 10),
             aegis = document.getElementById('aegis').checked || false,
@@ -275,7 +275,7 @@
         document.getElementById('onceAnswer').innerHTML = "★" + document.getElementById('currentStar').value + " →★" + equip.stars + " Total:" + equip.total.toLocaleString();
     }
     var toDrawer = function() {
-        var lv = parseInt(document.getElementById('lv').value || 150, 10),
+        var lv = document.getElementById('lv').value || 150,
             star = parseInt(document.getElementById('star').value || 17, 10),
             currentStar = parseInt(document.getElementById('currentStar').value || 0, 10),
             aegis = document.getElementById('aegis').checked || false,
