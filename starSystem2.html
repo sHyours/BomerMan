@@ -187,6 +187,7 @@
         this.destroyStars = [];
         this.track = [];
         this.count = 0;
+        this.fallCount = 0;
         // console.log('this.lv' + this.lv)
         this.upStar = function(aegis) {
             var r = Math.random() * 1,
@@ -197,11 +198,14 @@
                 if (this.stars >= system[this.lv].destroy && this.stars < system[this.lv].aegisVoid && aegis) {
                     this.total += a[TYPES.VALUE];
                 }
-                if ((r -= a[TYPES.SUCCESS]) < 0) {
+                if (this.fallCount >= 2 || (r -= a[TYPES.SUCCESS]) < 0) {
                     this.stars++;
-                } else if ((r -= a[TYPES.KEEP]) < 0) {;
+                    this.fallCount = 0;
+                } else if ((r -= a[TYPES.KEEP]) < 0) {
+                    this.fallCount = 0;
                 } else if ((r -= a[TYPES.FALL]) < 0) {
                     this.stars--;
+                    this.fallCount++;
                 } else if ((r -= a[TYPES.BROKEN]) < 0 && (this.stars >= system[this.lv].aegisVoid || !aegis)) {
                     if (!this.forDrawer) {
                         if (this.destroyStars.length > 5000) {
@@ -211,6 +215,7 @@
                     };
                     this.stars = system[this.lv].destroy;
                     this.total += system[this.lv].value;
+                    this.fallCount = 0;
                     this.destroy++;
                 };
                 this.count++;
@@ -253,6 +258,7 @@
             this.destroyStars = [];
             this.track = [];
             this.count = 0;
+            this.fallCount = 0;
             this.forDrawer = forDrawer || false;
         }
     }
