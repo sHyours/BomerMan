@@ -263,9 +263,9 @@
         }
     }
     var toOnce = function() {
-        var lv = document.getElementById('lv').value || 150,
-            star = document.getElementById('star').value || 17,
-            currentStar = document.getElementById('currentStar').value || 0,
+        var lv = parseInt(document.getElementById('lv').value || 150, 10),
+            star = parseInt(document.getElementById('star').value || 17, 10),
+            currentStar = parseInt(document.getElementById('currentStar').value || 0, 10),
             aegis = document.getElementById('aegis').checked || false,
             equip = (new Equip(lv, currentStar)).toStar(star, aegis, document.getElementById('save').value);
         document.getElementById('count').innerHTML = "count:" + equip.count.toLocaleString()
@@ -275,9 +275,9 @@
         document.getElementById('onceAnswer').innerHTML = "★" + document.getElementById('currentStar').value + " →★" + equip.stars + " Total:" + equip.total.toLocaleString();
     }
     var toDrawer = function() {
-        var lv = document.getElementById('lv').value || 150,
-            star = document.getElementById('star').value || 17,
-            currentStar = document.getElementById('currentStar').value || 0,
+        var lv = parseInt(document.getElementById('lv').value || 150, 10),
+            star = parseInt(document.getElementById('star').value || 17, 10),
+            currentStar = parseInt(document.getElementById('currentStar').value || 0, 10),
             aegis = document.getElementById('aegis').checked || false,
             data = [],
             date = [],
