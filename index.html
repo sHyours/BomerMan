@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>メイプルストーリー　スタートシステム</title>
+    <script type="text/javascript" src="echarts.min.js"></script>
+    <script type="text/javascript" src="system_data.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+</head>
+
+<body style="padding:10px;">
+    <div>メイプルストーリー　スタートシステム ver0.0.6</div>
+    <img id="wp200" class="_wp" src="" onclick="selectWp(200)" style="display:inline-block; width:40px;" alt="" placeholder="200">
+    <img id="wp160" class="_wp" src="" onclick="selectWp(160)" style="display:inline-block; width:40px;" alt="" placeholder="160">
+    <img id="wp150" class="_wp" src="" onclick="selectWp(150)" style="display:inline-block; width:40px; background:rgba(0,0,0,0.2)" alt="" placeholder="150">
+    <img id="wp140" class="_wp" src="" onclick="selectWp(140)" style="display:inline-block; width:40px;" alt="" placeholder="140">
+    <img id="cope" class="_wp" src="" onclick="selectWp('150++')" style="display:inline-block; width:40px;" alt="" placeholder="150++">
+    <div>当前星数：
+        <input type="text" style=" width:40px;" id="currentStar" value="0" readonly><span style="font-size:12px; color:gray;">点击下方选择</span></div>
+    <div id="currentStarHolder"></div>
+    <div>目标星数：
+        <input type="text" style="width:40px;" id="star" value="22" readonly><span style="font-size:12px; color:gray;">点击下方选择</span></div>
+    <div id="targetStarHolder"></div>
+    <input type="text" style="display:none;" id="lv" placeholder="lv(140,150,160,200,150++)" value="150">
+    <div style="width:800px; height:1px; background:#14a4fa;"></div>
+    <div style="padding:10px 0;">
+        <input type="checkbox" id="aegis" name="保護（15から）" checked="true">保護</input>
+        <input type="tel" id="save" value="12" style="width:30px;">から
+        <input type="button" id="submit" value="50000回(有延迟)" onclick="toDrawer()" style="margin-left:10px;">
+        <input type="button" id="once" value="一回" onclick="toOnce()">
+    </div>
+    <div style="width:800px; height:1px; background:#14a4fa;"></div>
+    <div style="width: 800px; max-height: 200px; word-break:normal; white-space:pre-warp; word-wrapL:break-word; margin-top:12px; overflow: auto;" id="count"></div>
+    <div style="width: 800px; max-height: 200px; word-break:normal; white-space:pre-warp; word-wrapL:break-word; margin-top:12px; overflow: auto;" id="destroyStars"></div>
+    <div style="width: 800px; max-height: 200px; word-break:normal; white-space:pre-warp; word-wrapL:break-word; margin-top:12px; overflow: auto;" id="destroy"></div>
+    <div style="width: 800px; max-height: 200px; word-break:normal; white-space:pre-warp; word-wrapL:break-word; margin-top:12px; overflow: auto;" id="onceAnswer"></div>
+    <div style="width: 800px; max-height: 200px; word-break:normal; white-space:pre-warp; word-wrapL:break-word; margin-top:12px; overflow: auto;" id="track"></div>
+    <div id="main" style="width: 1024px;height:768px;"></div>
+</body>
+
+</html>
