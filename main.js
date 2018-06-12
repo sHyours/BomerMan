@@ -13,35 +13,40 @@ var getData = function(stars, lv) {
         this.count = 0;
         this.fallCount = 0;
         // console.log('this.lv' + this.lv)
-        this.upStar = function(aegis) {
+        this.upStar = function(aegis, event) {
             var r = Math.random() * 1,
                 v = 0,
                 a = getData(this.stars, this.lv);
             if (a) {
                 this.total += a[TYPES.VALUE];
-                if (this.stars >= system[this.lv].destroy && this.stars < system[this.lv].aegisVoid && aegis) {
-                    this.total += a[TYPES.VALUE];
-                }
-                if (this.fallCount >= 2 || (r -= a[TYPES.SUCCESS]) < 0) {
+                if (event && [5, 10, 15].indexOf(this.stars) > -1) {
                     this.stars++;
                     this.fallCount = 0;
-                } else if ((r -= a[TYPES.KEEP]) < 0) {
-                    this.fallCount = 0;
-                } else if ((r -= a[TYPES.FALL]) < 0) {
-                    this.stars--;
-                    this.fallCount++;
-                } else if ((r -= a[TYPES.BROKEN]) < 0 && (this.stars >= system[this.lv].aegisVoid || !aegis)) {
-                    if (!this.forDrawer) {
-                        if (this.destroyStars.length > 5000) {
-                            this.destroyStars.shift();
+                } else {
+                    if (this.stars >= system[this.lv].destroy && this.stars < system[this.lv].aegisVoid && aegis) {
+                        this.total += a[TYPES.VALUE];
+                    }
+                    if (this.fallCount >= 2 || (r -= a[TYPES.SUCCESS]) < 0) {
+                        this.stars++;
+                        this.fallCount = 0;
+                    } else if ((r -= a[TYPES.KEEP]) < 0) {
+                        this.fallCount = 0;
+                    } else if ((r -= a[TYPES.FALL]) < 0) {
+                        this.stars--;
+                        this.fallCount++;
+                    } else if ((r -= a[TYPES.BROKEN]) < 0 && (this.stars >= system[this.lv].aegisVoid || !aegis)) {
+                        if (!this.forDrawer) {
+                            if (this.destroyStars.length > 5000) {
+                                this.destroyStars.shift();
+                            };
+                            this.destroyStars.push(this.stars + ' ');
                         };
-                        this.destroyStars.push(this.stars + ' ');
+                        this.stars = system[this.lv].destroy;
+                        this.total += system[this.lv].value;
+                        this.fallCount = 0;
+                        this.destroy++;
                     };
-                    this.stars = system[this.lv].destroy;
-                    this.total += system[this.lv].value;
-                    this.fallCount = 0;
-                    this.destroy++;
-                };
+                }
                 this.count++;
                 if (!this.forDrawer) {
                     if (this.track.length > 5000) {
@@ -53,7 +58,7 @@ var getData = function(stars, lv) {
                 return this;
             };
         }
-        this.toStar = function(star, aegis, aegisOpen, roll) {
+        this.toStar = function(star, aegis, aegisOpen, event, roll) {
             while (this.stars < star) {
                 var i = roll || 0;
                 while (i > 0) {
@@ -64,7 +69,7 @@ var getData = function(stars, lv) {
                         i = roll || 0;
                     }
                 }
-                this.upStar((aegisOpen && this.stars >= aegisOpen) ? (aegis || false) : false);
+                this.upStar((aegisOpen && this.stars >= aegisOpen) ? (aegis || false) : false, event);
             }
             if (this.debug) {
                 console.log(this.track);
@@ -91,7 +96,8 @@ var getData = function(stars, lv) {
             star = parseInt(document.getElementById('star').value || 17, 10),
             currentStar = parseInt(document.getElementById('currentStar').value || 0, 10),
             aegis = document.getElementById('aegis').checked || false,
-            equip = (new Equip(lv, currentStar)).toStar(star, aegis, document.getElementById('save').value);
+            lucky = document.getElementById('lucky').checked || false,
+            equip = (new Equip(lv, currentStar)).toStar(star, aegis, document.getElementById('save').value, lucky);
         document.getElementById('count').innerHTML = "count:" + equip.count.toLocaleString()
         document.getElementById('track').innerHTML = "history:" + equip.track.toLocaleString()
         document.getElementById('destroy').innerHTML = "destroy:" + equip.destroy.toLocaleString()
@@ -103,13 +109,14 @@ var getData = function(stars, lv) {
             star = parseInt(document.getElementById('star').value || 17, 10),
             currentStar = parseInt(document.getElementById('currentStar').value || 0, 10),
             aegis = document.getElementById('aegis').checked || false,
+            lucky = document.getElementById('lucky').checked || false,
             data = [],
             date = [],
             max = 0,
             equie = new Equip(lv, currentStar, true);
         var counts = 50000;
         for (var total = 0, i = 0; i < counts; i++) {
-            var t = equie.toStar(star, aegis, document.getElementById('save').value, 0).total;
+            var t = equie.toStar(star, aegis, document.getElementById('save').value, lucky, 0).total;
             if (t > max) { max = t };
             data[Math.round(t / 100000000)] = (data[Math.round(t / 100000000)] || 0) + 1;
             total += t;
